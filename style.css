@@ -1,0 +1,48 @@
+.tabuleiro {
+	width: 600px;
+	height: 650px;
+	margin: 0 auto;
+}
+
+.tabuleiro {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.cartas {
+	margin: 5px;
+	height: 120px;
+	width: 120px;
+	background-repeat: no-repeat;
+}
+
+.desmarcada.selected {
+	background-image: none;
+	cursor: default;
+}
+
+.desmarcada {
+	cursor: pointer;
+}
+
+button {
+	margin-top: 10px;
+	width: 250px;
+	height: 100px;
+	font-size: 30px;
+}
+
+h1 {
+	font-size: 100px;
+	text-align: center;
+}
+
+img {
+	margin: 5px;
+	height: 120px;
+	width: 120px;
+}
+
+img:hover {
+	box-shadow: 0px 0px 20px grey;
+}
