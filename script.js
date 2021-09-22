@@ -128,10 +128,10 @@ $(function () {
 				var fim = new Date().getTime();
 				var tempoTotal = fim - inicio;
 
-				mins = new Date(tempoTotal).getMinutes();
-				secs = new Date(tempoTotal).getSeconds();
+				minutos = new Date(tempoTotal).getMinutes();
+				segundos = new Date(tempoTotal).getSeconds();
 
-				alert(`O jogo acabou!! Você Levou ${mins} Minutos e ${secs} segundos!`);
+				alert(`O jogo acabou!! Você Levou ${minutos} Minutos e ${segundos} segundos!`);
 				app.init();
 			}
 		},
