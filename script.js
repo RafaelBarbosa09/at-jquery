@@ -1,21 +1,27 @@
 const imagens = [
-	'img/android.png', 
-	'img/android.png', 
-	'img/chrome.png', 
-	'img/chrome.png', 
-	'img/facebook.png', 
+	'img/android.png',
+	'img/android.png',
+	'img/chrome.png',
+	'img/chrome.png',
 	'img/facebook.png',
-	'img/firefox.png', 
-	'img/firefox.png', 
-	'img/googleplus.png', 
-	'img/googleplus.png', 
-	'img/html5.png', 
-	'img/html5.png', 
-	'img/twitter.png', 
-	'img/twitter.png', 
-	'img/windows.png', 
+	'img/facebook.png',
+	'img/firefox.png',
+	'img/firefox.png',
+	'img/googleplus.png',
+	'img/googleplus.png',
+	'img/html5.png',
+	'img/html5.png',
+	'img/twitter.png',
+	'img/twitter.png',
+	'img/windows.png',
 	'img/windows.png'
 ]
+
+var inicio;
+
+$(document).ready(function () {
+	montaJogo();
+});
 
 $(function () {
 	var app = {
@@ -26,15 +32,16 @@ $(function () {
 			$('.tabuleiro').replaceWith(app.divClone.clone());
 
 			$('.butaoInicio').click(function () {
-				app.shuffle();
+				alert('Atenção! O jogo vai começar.')
+				app.embaralhar();
 
-				d1 = new Date().getTime();
+				inicio = new Date().getTime();
 
 				$('.butaoInicio').off();
 
 				setTimeout(function () {
 					$('img').fadeOut(250, 'linear', function () {
-						app.cardBackAll();
+						app.cartaVerso();
 					});
 				}, 3000);
 			});
@@ -44,19 +51,19 @@ $(function () {
 			});
 		},
 
-		cardBackAll: function () {
+		cartaVerso: function () {
 			$('.desmarcada').each(function (index) {
 				$(this).html('<img src="img/cross.png">').fadeIn(300).slideDown(300, 'linear');
 			});
 		},
 
-		cardFront: function () {
+		cartaFrente: function () {
 			$('.cartas').each(function (index) {
 				$(this).html('<img src="' + $(this).data('cardValue') + '">');
 			});
 		},
 
-		shuffle: function () {
+		embaralhar: function () {
 			let random = 0;
 			let temp = 0;
 			for (let i = 1; i < app.cartas.length; i++) {
@@ -65,27 +72,27 @@ $(function () {
 				app.cartas[i] = app.cartas[random];
 				app.cartas[random] = temp;
 			}
-			app.assingCards();
-			app.cardFront();
+			app.atribuiCarta();
+			app.cartaFrente();
 		},
 
-		assingCards: function () {
+		atribuiCarta: function () {
 			$('.cartas').each(function (index) {
 				$(this).attr('data-card-value', app.cartas[index]);
 			});
-			app.clickHandlers();
+			app.handleClick();
 		},
 
-		clickHandlers: function () {
+		handleClick: function () {
 			$('.cartas').bind('click', function () {
 				$(this).addClass('selected').slideUp(250, function () {
 					$(this).html('<img src="' + $(this).data('cardValue') + '">').fadeIn(150);
 				});
-				app.checkMatch();
+				app.checaParidade();
 			});
 		},
 
-		checkMatch: function () {
+		checaParidade: function () {
 			if ($('.selected').length === 2) {
 				if ($('.selected').first().data('cardValue') == $('.selected').last().data('cardValue')) {
 					// alert('Acertou, miserável!')
@@ -101,7 +108,7 @@ $(function () {
 						$(this).off('click');
 					});
 
-					app.checkWin();
+					app.checaFimDoJogo();
 				} else {
 					// alert('Errou!')
 					setTimeout(function () {
@@ -110,20 +117,20 @@ $(function () {
 						$('.selected').each(function () {
 							$(this).html('').removeClass('selected');
 						});
-						app.cardBackAll();
+						app.cartaVerso();
 					}, 1000);
 				}
 			}
 		},
 
-		checkWin: function () {
+		checaFimDoJogo: function () {
 			if ($('.desmarcada').length === 0) {
-				d2 = new Date().getTime();
-				d3 = d2 - d1;
-				mins = Math.floor((d3 % 36e5) / 6e4);
-				secs = Math.floor((d3 % 6e4) / 1000);
-				localStorage.setItem('Minutos', mins);
-				localStorage.setItem('Segundos', secs);
+				var fim = new Date().getTime();
+				var tempoTotal = fim - inicio;
+
+				mins = new Date(tempoTotal).getMinutes();
+				secs = new Date(tempoTotal).getSeconds();
+
 				alert(`O jogo acabou!! Você Levou ${mins} Minutos e ${secs} segundos!`);
 				app.init();
 			}
@@ -133,22 +140,22 @@ $(function () {
 });
 
 function criaDiv(numero) {
-  let div = document.createElement('div');
-  div.setAttribute("class", "cartas desmarcada");
+	let div = document.createElement('div');
+	div.setAttribute("class", "cartas desmarcada");
 
-  document.querySelector(".tabuleiro").appendChild(div);
-	
+	document.querySelector(".tabuleiro").appendChild(div);
+
 	const img = imagens[numero];
 	let teste = criaImg(img);
 
 	div.appendChild(teste);
-	
+
 }
 
 function criaImg(img) {
 	let imgTag = document.createElement('img');
 	imgTag.setAttribute("src", img);
-	
+
 	return imgTag;
 }
 
@@ -170,8 +177,8 @@ function criaBotoes() {
 }
 
 function montaJogo() {
-	for(let i = 0; i < 16; i++) {
-    criaDiv(i);
-  }
-	criaBotoes()
+	for (let i = 0; i < 16; i++) {
+		criaDiv(i);
+	}
+	criaBotoes();
 }
