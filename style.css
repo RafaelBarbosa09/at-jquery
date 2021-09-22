@@ -1,3 +1,9 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
 .tabuleiro {
 	width: 600px;
 	height: 650px;
@@ -25,11 +31,27 @@
 	cursor: pointer;
 }
 
+.botoes {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.botaoParar {
+	background: #e52e4d;
+}
+
+.btnInicio {
+	background: #6933ff;
+}
+
 button {
 	margin-top: 10px;
-	width: 250px;
-	height: 100px;
-	font-size: 30px;
+	font-size: 18px;
+	height: 40px;
+	border: 0;
+	border-radius: 3px;
+	color: #fff;
 }
 
 h1 {

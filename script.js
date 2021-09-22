@@ -31,13 +31,13 @@ $(function () {
 		init: function () {
 			$('.tabuleiro').replaceWith(app.divClone.clone());
 
-			$('.butaoInicio').click(function () {
+			$('.btnInicio').click(function () {
 				alert('Atenção! O jogo vai começar.')
 				app.embaralhar();
 
 				inicio = new Date().getTime();
 
-				$('.butaoInicio').off();
+				$('.btnInicio').off();
 
 				setTimeout(function () {
 					$('img').fadeOut(250, 'linear', function () {
@@ -46,7 +46,7 @@ $(function () {
 				}, 3000);
 			});
 
-			$('.butaoReset').click(function () {
+			$('.botaoParar').click(function () {
 				app.init();
 			});
 		},
@@ -139,6 +139,13 @@ $(function () {
 	app.init();
 });
 
+function montaJogo() {
+	for (let i = 0; i < 16; i++) {
+		criaDiv(i);
+	}
+	criaBotoes();
+}
+
 function criaDiv(numero) {
 	let div = document.createElement('div');
 	div.setAttribute("class", "cartas desmarcada");
@@ -164,21 +171,14 @@ function criaBotoes() {
 	divBotao.setAttribute("class", "botoes");
 
 	let btnInicio = document.createElement('button');
-	btnInicio.setAttribute("class", "butaoInicio");
+	btnInicio.setAttribute("class", "btnInicio");
 	btnInicio.textContent = "Iniciar";
 
-	let btnReset = document.createElement('button');
-	btnReset.setAttribute("class", "butaoReset");
-	btnReset.textContent = "Parar";
+	let btnParar = document.createElement('button');
+	btnParar.setAttribute("class", "botaoParar");
+	btnParar.textContent = "Parar";
 
 	document.querySelector(".tabuleiro").appendChild(divBotao);
 	document.querySelector(".botoes").appendChild(btnInicio);
-	document.querySelector(".botoes").appendChild(btnReset);
-}
-
-function montaJogo() {
-	for (let i = 0; i < 16; i++) {
-		criaDiv(i);
-	}
-	criaBotoes();
+	document.querySelector(".botoes").appendChild(btnParar);
 }
